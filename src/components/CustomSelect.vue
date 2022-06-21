@@ -164,7 +164,7 @@ export default {
             background: #fff;
             box-shadow: 0 4px 14px rgba(218, 221, 218, 0.4);
             border: 2px solid #eeeded;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 8px 0;
             transform: translate(0, 100%);
             z-index: 30;

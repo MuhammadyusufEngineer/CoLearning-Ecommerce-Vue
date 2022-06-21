@@ -1,10 +1,6 @@
 <template>
     <div class="w-full flex flex-col relative">
-        <div class="w-full flex items-center justify-between">
-            <h3 class="font-['Poppins'] font-semibold text-[18px] leading-[27px]">Our customers says</h3>
-            <button class="btn-sm bg-none btn-animate">Button <img :src="chevron_black" alt="chevron"></button>
-        </div>
-
+        <GoTo #title="Our, customers, says" #btn="Button" />
         <swiper :freeMode="true" :navigation="{ nextEl: '.next', prevEl: '.prev' }" :modules="modules"
             class="mySwiper" :breakpoints="{
                 0: {
@@ -47,6 +43,7 @@
     </div>
 </template>
 <script>
+import GoTo from '@/components/GoTo.vue'
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide, useSwiper } from "swiper/vue";
 // Import Swiper styles
@@ -63,6 +60,7 @@ export default {
     components: {
         Swiper,
         SwiperSlide,
+        GoTo
     },
     data() {
         return {

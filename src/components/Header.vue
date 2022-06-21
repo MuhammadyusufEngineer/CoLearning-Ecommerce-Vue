@@ -5,8 +5,8 @@
             class="flex md:hidden w-full min-h-screen fixed top-0 left-[-100%] justify-center items-center bg-white z-50 duration-300 mobile-menu">
             <div class="flex flex-col min-h-full">
                 <div class="flex flex-col items-center gap-[33px]">
-                    <a :class="item.class" :href="item.href" v-for="item in MobileAnchors" :key="item.id"> {{ item.text
-                    }}</a>
+                    <a :class="item.class" :to="item.href" v-for="item in MobileAnchors" :key="item.id"> {{ item.text
+                    }}</a>>
                 </div>
             </div>
         </div>
@@ -14,7 +14,9 @@
         <div
             class="w-full flex flex-row items-center justify-between fixed top-0 left-0 bg-white z-50 px-5 md:hidden shadow-lg">
             <div class="logo mr-2">
-                <img src="../assets/img/Brand.svg" alt="brand logo">
+                <router-link to="/">
+                    <img src="../assets/img/Brand.svg" alt="brand logo">
+                </router-link>
             </div>
             <div class="mobile-burger relative z-50 right-0 w-5 h-5 bg-cover bg-no-repeat bg-center" @click="toggle">
             </div>
@@ -22,7 +24,7 @@
         <!-- Nav -->
         <div class="main-container hidden md:flex flex-row items-center py-4">
             <div class="flex items-center gap-[33px]" v-for="item in anchors" :key="item.id">
-                <a :class="link.class" :href="link.href" v-for="link in item.items" :key="link.id"> {{ link.text }}</a>
+                <router-link :class="link.class" :to="link.href" v-for="link in item.items" :key="link.id"> {{ link.text }}</router-link>
             </div>
         </div>
         <!-- Divider -->
@@ -32,7 +34,9 @@
         <!-- Header Content started -->
         <div class="main-container flex-row items-center pt-20 md:pt-10 pb-12">
             <div class="logo mr-5 hidden md:block">
-                <img src="@/assets/img/Brand.svg" alt="logo brand">
+                <router-link to="/">
+                    <img src="@/assets/img/Brand.svg" alt="logo brand">
+                </router-link>
             </div>
             <div
                 class="flex items-center justify-between rounded-[12px] max-w-[500px] w-full sm:w-[500px] border border-solid border-[#d1d1d1] bg-[#f9f9f9] mx-auto py-[10px] px-4">
@@ -104,6 +108,9 @@
     </header>
 </template>
 <style scoped>
+img {
+    cursor: pointer;
+}
 a {
     font-weight: 400;
     font-size: 12px;
@@ -148,15 +155,16 @@ export default {
             anchors: [
                 {
                     id: 1, items: [
-                        { id: 1, href: '#', text: 'Chat with us', class: 'text-green' },
-                        { id: 2, href: 'tel:998330072003', text: '+998 33 007 20 03' },
-                        { id: 3, href: 'mailto:mrimofficial7@gmail.com', text: 'mrimofficial7@gmail.com' }]
+                        { id: 1, router: true, href: '/chat', text: 'Chat with us', class: 'text-green' },
+                        { id: 2, router: true, href: 'tel:998330072003', text: '+998 33 007 20 03' },
+                        { id: 3, router: true, href: 'mailto:mrimofficial7@gmail.com', text: 'mrimofficial7@gmail.com' }
+                        ]
                 },
                 {
                     id: 2, items: [
-                        { id: 1, href: '#', text: 'Blog', class: 'text-green' },
-                        { id: 2, href: '#', text: 'About us', class: 'text-green' },
-                        { id: 3, href: '#', text: 'Careers', class: 'text-green' }]
+                        { id: 1, router: true, href: '/Blog', text: 'Blog', class: 'text-green' },
+                        { id: 2, router: true, href: '/Products', text: 'About us', class: 'text-green' },
+                        { id: 3, router: true, href: '/Careers', text: 'Careers', class: 'text-green' }]
                 }
             ],
             MobileAnchors: [

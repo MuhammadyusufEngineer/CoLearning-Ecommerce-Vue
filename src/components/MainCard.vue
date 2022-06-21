@@ -1,6 +1,7 @@
 <template>
-    <swiper class="prodSwiper" 
+    <swiper class="prodSwiper w-full" 
         :modules="modules"
+        
         :freeMode="true" :breakpoints="{
             0: {
                 slidesPerView: 1
@@ -24,7 +25,7 @@
                 slidesPerView: 2.5
             },
             1260: {
-                slidesPerView: 3
+                slidesPerView: items
             }
         }">
         <swiper-slide v-for="index in items" :key="index">
@@ -66,7 +67,7 @@ export default {
     },
     props:{
         items:{
-            type: String, 
+            type: Number, 
             default: ''
         }
     },
