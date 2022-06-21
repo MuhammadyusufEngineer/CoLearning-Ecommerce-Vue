@@ -61,7 +61,7 @@
     </div>
   </section>
 
-  <section class="flex justify-between">
+  <section class="home-container flex justify-between">
     <div class="absolute -left-full lg:left-0 lg:relative ml-5 lg:max-w-[30%] duration-300 filter-aside"
       id="filter-aside">
       <div class="flex flex-col items-start">

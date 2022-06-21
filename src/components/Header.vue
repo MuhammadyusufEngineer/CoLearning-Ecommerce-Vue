@@ -156,7 +156,7 @@ export default {
                 {
                     id: 1, items: [
                         { id: 1, router: true, href: '/chat', text: 'Chat with us', class: 'text-green' },
-                        { id: 2, router: true, href: 'tel:998330072003', text: '+998 33 007 20 03' },
+                        { id: 2, router: true, href: '/page', text: '+998 33 007 20 03' },
                         { id: 3, router: true, href: 'mailto:mrimofficial7@gmail.com', text: 'mrimofficial7@gmail.com' }
                         ]
                 },
