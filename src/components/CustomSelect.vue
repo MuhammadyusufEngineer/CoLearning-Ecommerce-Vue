@@ -1,34 +1,5 @@
-<!-- <template>
-
-    <div class="custom-select " style="width:140px;">
-        <select>
-            <option v-for="item in options" :value="item.id" :key="item.id"> {{ item.text }} </option>
-        </select>
-    </div>
-</template>
-<script>
-export default {
-    data() {
-        return {
-            options: [
-                {id: 0, text: "All categories"},
-                {id: 1, text: "Bakery"},
-                {id: 2, text: "Fruit"},
-                {id: 3, text: "Vegetables"},
-                {id: 4, text: "Meat"},
-                {id: 5, text: "Drinks"},
-                {id: 6, text: "Kitchen"},
-                {id: 7, text: "Nutrition"},
-                {id: 8, text: "Baby"},
-                {id: 9, text: "Pharmacy"},
-            ],
-        }
-    },
-}
-</script> -->
-<!-- Use preprocessors via the lang attribute! e.g. <template lang="pug"> -->
 <template>
-    <div class="ui-custom-select">
+    <div class="ui-custom-select" v-on-clickaway="away">
         <div class="current-value" @click="is_open = !is_open">
             {{ current_item.title }}
             <div class="arrow" :class="{ reverse: is_open }">
@@ -46,7 +17,9 @@ export default {
 </template>
 
 <script>
+import { mixin as clickaway } from 'vue-clickaway';
 export default {
+    mixins: [ clickaway ],
     data() {
         return {
             items: [
@@ -111,7 +84,10 @@ export default {
                     this.items[index_new_item]
                 );
             }
-        }
+        },
+        away() {
+            console.log('clicked away');
+        },
     },
 
     computed: {
@@ -120,12 +96,12 @@ export default {
                 return this.items[this.current_item_value];
             } else {
                 return {
-                    title: "Элемент не найден",
+                    title: "Element did not found",
                     value: false
                 };
             }
         }
-    }
+    },
 };
 </script>
 

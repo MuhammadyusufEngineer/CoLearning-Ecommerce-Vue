@@ -10,6 +10,7 @@
   "dependencies": {
     "swiper": "^8.2.3",
     "vue": "^3.2.36",
+    "vue-clickaway": "^2.2.2",
     "vue-router": "4"
   },
   "devDependencies": {
