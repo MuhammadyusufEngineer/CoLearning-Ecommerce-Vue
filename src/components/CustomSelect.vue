@@ -1,10 +1,16 @@
 <template>
     <div class="invisible-layer" v-show="is_open" @click="is_open = !is_open"></div>
     <div class="ui-custom-select">
-        <div class="current-value" @click="is_open = !is_open">
-            {{ current_item.title }}
+        <div class="current-value" >
+            <div
+                class="flex items-center justify-between w-full"
+                :class="{'z-[9999]': is_open}"
+                @click="is_open = !is_open"
+            >
+                {{ current_item.title }}
             <div class="arrow" :class="{ reverse: is_open }">
                 <img src="../assets/img/chevron-down.svg" alt="">
+            </div>  
             </div>
 
             <transition name="fade">
@@ -101,6 +107,7 @@ export default {
     left: 0;
     width: 100%;
     min-height: 1000%;
+    z-index: 9998;
 }
 .ui-custom-select {
     width: 134px;

@@ -15,7 +15,8 @@
             </div>
             <p class="text-[12px] font-normal leading-[16px] grid-view-txt">Grid view</p>
           </div>
-          <div class="flex items-center gap-[5px] list-view cursor-pointer hover:bg-[#f4f8ec] p-1 rounded-md" @click="list">
+          <div class="flex items-center gap-[5px] list-view cursor-pointer hover:bg-[#f4f8ec] p-1 rounded-md"
+            @click="list">
             <div class="list-gray">
               <img class="min-w-[16px] h-4 list-view-img" src="@/assets/img/list-view-green.svg" alt="list view icon">
             </div>
@@ -122,16 +123,72 @@
 
     </div>
     <div class="w-full lg:w-[70%]">
-      <div class="flex flex-row flex-wrap justify-evenly gap-8 prod-body active">
-        <Product v-for="index in 10" :key="index" />
-      </div>
-      <div class="flex flex-row flex-wrap justify-evenly gap-8 prod-body">
-        <Product v-for="index in 10" :key="index" />
-      </div>
+      <transition name="fade" mode="out-in">
+        <div :key="listStyle" class="flex flex-row flex-wrap justify-evenly gap-8 prod-body active">
+          <ProductCard v-if="listStyle === 'grid'" v-for="index in 10" :key="'A' + index" gridType="grid" />
+          <ProductCard v-else v-for="index in 10" :key="'B' + index" gridType="list" />
+        </div>
+      </transition>
     </div>
   </section>
 </template>
-<style lang="scss" scoped>
+
+<script>
+import Filter from '@/components/Filter.vue'
+import Radio from '@/components/Radio.vue'
+import AsideCheckbox from '@/components/AsideCheckbox.vue'
+import AsideCategory from '@/components/AsideCategory.vue'
+import AsideRating from '@/components/AsideRating.vue'
+import CustomSelect from '@/components/CustomSelect.vue'
+import ProductCard from '@/components/ProductCard.vue'
+import listGreen from '@/assets/img/list-view-green.svg'
+import listGray from '@/assets/img/list-view-gray.svg'
+import gridGreen from '@/assets/img/grid-view-green.svg'
+import gridGray from '@/assets/img/grid-view-gray.svg'
+export default {
+  name: 'Products',
+  props: {
+    name: String,
+  },
+  data() {
+    return {
+      listGreen,
+      listGray,
+      gridGreen,
+      gridGray,
+      listStyle: 'col'
+    }
+  },
+  components: {
+    CustomSelect,
+    Filter,
+    Radio,
+    AsideCheckbox,
+    AsideCategory,
+    AsideRating,
+    ProductCard,
+  },
+  methods: {
+    grid() {
+      this.listStyle = 'grid'
+    },
+    list() {
+      this.listStyle = 'col'
+    },
+    AsideMenu() {
+      let aside = document.querySelector('.filter-aside')
+      aside.classList.toggle('active')
+
+    },
+    ApplyBtn() {
+      let aside = document.querySelector('.filter-aside')
+      aside.classList.remove('active')
+    }
+  }
+}
+</script>
+
+<style lang="scss">
 [slider] {
   position: relative;
   height: 6px;
@@ -307,89 +364,4 @@ div[slider]>input[type="range"]::-ms-tooltip {
 [slider]:hover>div>[sign] {
   opacity: 1;
 }
-
 </style>
-<script>
-import Filter from '@/components/Filter.vue'
-import Radio from '@/components/Radio.vue'
-import AsideCheckbox from '@/components/AsideCheckbox.vue'
-import AsideCategory from '@/components/AsideCategory.vue'
-import AsideRating from '@/components/AsideRating.vue'
-import CustomSelect from '@/components/CustomSelect.vue'
-import Product from '@/components/Product.vue'
-import listGreen from '@/assets/img/list-view-green.svg'
-import listGray from '@/assets/img/list-view-gray.svg'
-import gridGreen from '@/assets/img/grid-view-green.svg'
-import gridGray from '@/assets/img/grid-view-gray.svg'
-export default {
-  name: 'Products',
-  data() {
-    return {
-      listGreen,
-      listGray,
-      gridGreen,
-      gridGray,
-    }
-  },
-  components: {
-    CustomSelect,
-    Filter,
-    Radio,
-    AsideCheckbox,
-    AsideCategory,
-    AsideRating,
-    Product
-  },
-  props: {
-    name: String,
-  },
-  methods: {
-    grid() {
-      let gridText = document.querySelector('.grid-view-txt')
-      let gridImg = document.querySelector('.grid-view-img')
-      let listText = document.querySelector('.list-view-txt')
-      let listImg = document.querySelector('.list-view-img')
-      let prod = document.querySelectorAll('.product-box')
-      prod.forEach(item => {
-        item.classList.remove('list')
-        item.classList.add('grid')
-        item.classList.add('fade')
-      })
-      gridText.classList.add('text-[#6a983c]')
-      gridText.classList.remove('text-[#a9a9a9]')
-      gridImg.src = this.gridGreen
-      listText.classList.remove('text-[#6a983c]')
-      listText.classList.add('text-[#a9a9a9]')
-      listImg.src = this.listGray
-    },
-    list() {
-      let gridText = document.querySelector('.grid-view-txt')
-      let gridImg = document.querySelector('.grid-view-img')
-      let listText = document.querySelector('.list-view-txt')
-      let listImg = document.querySelector('.list-view-img')
-      let prod = document.querySelectorAll('.product-box')
-
-      prod.forEach(item => {
-        item.classList.remove('grid')
-        item.classList.add('list')
-        item.classList.add('active')
-      })
-      listText.classList.add('text-[#6a983c]')
-      listText.classList.remove('text-[#a9a9a9]')
-      listImg.src = this.listGreen
-      gridText.classList.remove('text-[#6a983c]')
-      gridText.classList.add('text-[#a9a9a9]')
-      gridImg.src = this.gridGray
-    },
-    AsideMenu() {
-      let aside = document.querySelector('.filter-aside')
-      aside.classList.toggle('active')
-
-    },
-    ApplyBtn() {
-      let aside = document.querySelector('.filter-aside')
-      aside.classList.remove('active')
-    }
-  }
-}
-</script>

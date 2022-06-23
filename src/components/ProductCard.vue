@@ -1,6 +1,6 @@
 <template>
 
-    <a href="#" class="product-box">
+    <a href="#" class="product-box" :class="gridType">
         <div class="product-imgBox">
             <div class="product-sale-tag tag tag-selected">-36%</div>
         </div>
@@ -56,7 +56,12 @@
 </template>
 <script>
 export default {
-    name: 'Product',
-   
+    name: 'ProductCard',
+    props: {
+        gridType: {
+            type: String,
+            default: 'list'
+        }
+    }
 }
 </script>
