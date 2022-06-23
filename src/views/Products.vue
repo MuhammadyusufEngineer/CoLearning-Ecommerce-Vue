@@ -31,7 +31,8 @@
       </div>
       <div class="py-4 relative filters">
         <div class="w-full flex flex-wrap items-center gap-4 mb-4">
-          <a href="#filter-aside" @click="AsideMenu" class="block lg:hidden p-2 bg-[#6A983C] rounded-xl cursor-pointer filter-btn">
+          <a href="#filter-aside" @click="AsideMenu"
+            class="block lg:hidden p-2 bg-[#6A983C] rounded-xl cursor-pointer filter-btn">
             <img src="@/assets/img/filter.svg" alt="">
           </a>
           <form class="gray-rounded">
@@ -121,7 +122,10 @@
 
     </div>
     <div class="w-full lg:w-[70%]">
-      <div class="flex flex-row flex-wrap justify-evenly gap-8">
+      <div class="flex flex-row flex-wrap justify-evenly gap-8 prod-body active">
+        <Product v-for="index in 10" :key="index" />
+      </div>
+      <div class="flex flex-row flex-wrap justify-evenly gap-8 prod-body">
         <Product v-for="index in 10" :key="index" />
       </div>
     </div>
@@ -303,6 +307,7 @@ div[slider]>input[type="range"]::-ms-tooltip {
 [slider]:hover>div>[sign] {
   opacity: 1;
 }
+
 </style>
 <script>
 import Filter from '@/components/Filter.vue'
@@ -348,6 +353,7 @@ export default {
       prod.forEach(item => {
         item.classList.remove('list')
         item.classList.add('grid')
+        item.classList.add('fade')
       })
       gridText.classList.add('text-[#6a983c]')
       gridText.classList.remove('text-[#a9a9a9]')
@@ -362,9 +368,11 @@ export default {
       let listText = document.querySelector('.list-view-txt')
       let listImg = document.querySelector('.list-view-img')
       let prod = document.querySelectorAll('.product-box')
+
       prod.forEach(item => {
         item.classList.remove('grid')
         item.classList.add('list')
+        item.classList.add('active')
       })
       listText.classList.add('text-[#6a983c]')
       listText.classList.remove('text-[#a9a9a9]')
@@ -375,12 +383,12 @@ export default {
     },
     AsideMenu() {
       let aside = document.querySelector('.filter-aside')
-        aside.classList.toggle('active')
+      aside.classList.toggle('active')
 
     },
     ApplyBtn() {
       let aside = document.querySelector('.filter-aside')
-        aside.classList.remove('active')
+      aside.classList.remove('active')
     }
   }
 }

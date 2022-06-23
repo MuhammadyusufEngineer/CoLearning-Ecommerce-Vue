@@ -1,9 +1,11 @@
 <template>
-    <div class="ui-custom-select" v-on-clickaway="away">
+    <div class="invisible-layer" v-show="is_open" @click="is_open = !is_open"></div>
+    <div class="ui-custom-select">
         <div class="current-value" @click="is_open = !is_open">
             {{ current_item.title }}
             <div class="arrow" :class="{ reverse: is_open }">
-            <img src="../assets/img/chevron-down.svg" alt=""></div>
+                <img src="../assets/img/chevron-down.svg" alt="">
+            </div>
 
             <transition name="fade">
                 <ul v-if="is_open" class="values" :class="{ open: is_open }">
@@ -17,33 +19,26 @@
 </template>
 
 <script>
-import { mixin as clickaway } from 'vue-clickaway';
 export default {
-    mixins: [ clickaway ],
     data() {
         return {
             items: [
-
                 {
                     title: "Bakery",
                     value: "1"
                 },
-
                 {
                     title: "Fruit",
                     value: "2"
                 },
-
                 {
                     title: "Vegetables",
                     value: "3"
                 },
-
                 {
                     title: "Meat",
                     value: "4"
                 },
-
                 {
                     title: "Drinks",
                     value: "5"
@@ -64,15 +59,12 @@ export default {
                     title: "Pharmacy",
                     value: "9"
                 },
-                
+
             ],
-
             current_item_value: 0,
-
-            is_open: false
+            is_open: false,
         };
     },
-
     methods: {
         change_current_item(item) {
             const index_new_item = this.items.indexOf(item);
@@ -84,9 +76,6 @@ export default {
                     this.items[index_new_item]
                 );
             }
-        },
-        away() {
-            console.log('clicked away');
         },
     },
 
@@ -106,8 +95,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.invisible-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 1000%;
+}
 .ui-custom-select {
     width: 134px;
+
     .current-value {
         padding: 2px 8px;
         display: flex;
@@ -143,7 +140,8 @@ export default {
             border-radius: 12px;
             padding: 8px 0;
             transform: translate(0, 100%);
-            z-index: 30;
+            z-index: 9999;
+
             &.open {
                 display: block;
             }
@@ -151,6 +149,7 @@ export default {
             .value {
                 padding: 10px 15px;
                 cursor: pointer;
+
                 &:hover {
                     background: rgb(238, 237, 237);
                 }

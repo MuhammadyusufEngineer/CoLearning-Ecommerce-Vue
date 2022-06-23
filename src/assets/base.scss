@@ -611,6 +611,9 @@ label {
   width:268px;
   height: auto;
   padding: 16px !important;
+  animation-delay: 3s;
+  animation-duration: 3s;
+  animation-timing-function: ease;
   .product-content {
       flex-direction: column;
       padding: 0 !important;
@@ -776,7 +779,6 @@ label {
   }
 
 
-  
   .product-box.list .product-about,
   .product-box.list .product-shipping {
       @apply hidden md:block
@@ -800,7 +802,7 @@ label {
   
 
 
-
+  
 
 
   .testimonial {
@@ -905,4 +907,3 @@ body {
       justify-content: space-evenly;
   }
 }
-
