@@ -6,7 +6,7 @@
             <div class="flex flex-col min-h-full">
                 <div class="flex flex-col items-center gap-[33px]">
                     <a :class="item.class" :to="item.href" v-for="item in MobileAnchors" :key="item.id"> {{ item.text
-                    }}</a>>
+                    }}</a>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
         </div>
         <nav class="bg-[#f9f9f9] py-4">
             <div class="main-container flex-row items-center justify-start gap-[42px]">
-                <CustomSelect class="hidden lg:block custom-select w-[120px]" v-for="n in 7" :key="n.index" />
+                <CustomSelect v-for="n in 7" :key="n.index" />
 
                 <swiper class="navSwiper block lg:hidden"
                 :free-mode="true"

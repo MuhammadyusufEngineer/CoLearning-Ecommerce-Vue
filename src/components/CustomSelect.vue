@@ -1,6 +1,6 @@
 <template>
-    <div class="invisible-layer" v-show="is_open" @click="is_open = !is_open"></div>
-    <div class="ui-custom-select">
+    <div class="invisible-layer bg-red-500" v-show="is_open" @click="is_open = !is_open"></div>
+    <div class="ui-custom-select hidden lg:block custom-select w-[120px]">
         <div class="current-value" >
             <div
                 class="flex items-center justify-between w-full"

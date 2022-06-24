@@ -9,16 +9,41 @@
       <div class="w-full flex flex-wrap items-center justify-between mb-2 p-2">
         <h1 class="text-[32px] font-semibold font-['Poppins'] leading-[28px] mb-5 md:mb-0">Fruit and vegetables</h1>
         <div class="flex items-center w-[275px] justify-between">
-          <div class="flex items-center gap-[5px] cursor-pointer hover:bg-[#f4f8ec] p-1 rounded-md" @click="grid">
+          <div class="flex items-center gap-[5px] cursor-pointer hover:bg-[#f4f8ec] p-1 rounded-md grid-view-img"
+            @click="grid">
             <div>
-              <img class="min-w-[16px] h-4 grid-view-img" src="@/assets/img/grid-view-gray.svg" alt="grid view icon">
+              <div class="min-w-[16px] h-4 grid-view-img" src="@/assets/img/grid-view-gray.svg" alt="grid view icon">
+                <svg width="100%" height="100%" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M31.3335 1.3335H4.66683C2.82588 1.3335 1.3335 2.82588 1.3335 4.66683V31.3335C1.3335 33.1744 2.82588 34.6668 4.66683 34.6668H31.3335C33.1744 34.6668 34.6668 33.1744 34.6668 31.3335V4.66683C34.6668 2.82588 33.1744 1.3335 31.3335 1.3335Z"
+                    stroke="#6A983C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M1.3335 18.0002H34.6668" stroke="#6A983C" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M18.0002 1.3335V34.6668" stroke="#6A983C" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+
+              </div>
             </div>
             <p class="text-[12px] font-normal leading-[16px] grid-view-txt">Grid view</p>
           </div>
-          <div class="flex items-center gap-[5px] list-view cursor-pointer hover:bg-[#f4f8ec] p-1 rounded-md"
+          <div class="flex items-center gap-[5px] cursor-pointer hover:bg-[#f4f8ec] p-1 rounded-md list-view-img active"
             @click="list">
             <div class="list-gray">
-              <img class="min-w-[16px] h-4 list-view-img" src="@/assets/img/list-view-green.svg" alt="list view icon">
+              <div class="min-w-[16px] h-4 list-view-img" src="@/assets/img/list-view-green.svg" alt="list view icon">
+                <svg width="100%" height="100%" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M32 2H5.33333C3.49238 2 2 3.49238 2 5.33333V32C2 33.841 3.49238 35.3333 5.33333 35.3333H32C33.841 35.3333 35.3333 33.841 35.3333 32V5.33333C35.3333 3.49238 33.841 2 32 2Z"
+                    stroke="#6A983C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M2 10.3333H35.3333" stroke="#6A983C" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M2 18.6667H35.3333" stroke="#6A983C" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M2 27H35.3333" stroke="#6A983C" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+
+              </div>
             </div>
             <p class="text-[12px] text-[#6a983c] font-normal leading-[16px] list-view-txt">List view</p>
           </div>
@@ -171,9 +196,17 @@ export default {
   methods: {
     grid() {
       this.listStyle = 'grid'
+      let gridImg = document.querySelector('.grid-view-img')
+      let listImg = document.querySelector('.list-view-img')
+      gridImg.classList.add('active')
+      listImg.classList.remove('active')
     },
     list() {
       this.listStyle = 'col'
+      let gridImg = document.querySelector('.grid-view-img')
+      let listImg = document.querySelector('.list-view-img')
+      gridImg.classList.remove('active')
+      listImg.classList.add('active')
     },
     AsideMenu() {
       let aside = document.querySelector('.filter-aside')
@@ -189,6 +222,32 @@ export default {
 </script>
 
 <style lang="scss">
+
+.grid-view-img,
+.list-view-img {
+  .list-view-txt,
+  .grid-view-txt {
+    color: #a9a9a9 !important;
+  }
+  svg {
+    path {
+      stroke: #a9a9a9;
+    }
+  }
+}
+.grid-view-img.active,
+.list-view-img.active {
+  .list-view-txt,
+  .grid-view-txt {
+    color: #6A983C !important;
+  }
+  svg {
+    path {
+      stroke: #6A983C;
+    }
+  }
+}
+
 [slider] {
   position: relative;
   height: 6px;
