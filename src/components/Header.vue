@@ -42,13 +42,13 @@
                 class="flex items-center justify-between rounded-[12px] max-w-[500px] w-full sm:w-[500px] border border-solid border-[#d1d1d1] bg-[#f9f9f9] mx-auto py-[10px] px-4">
 
                 <CustomSelect />
-                <div class="w-[1px] h-5 bg-[#D1D1D1]"></div>
-                <div class="w-auto sm:w-[300px]">
+                <div class="w-[1px] h-5 bg-[#D1D1D1] hidden lg:block"></div>
+                <div class="w-full">
                     <input type="text"
-                        class="w-full border-none outline-none px-3 max-w-[262px] text-[14px] bg-transparent placeholder:text-[#a9a9a9] placeholder:text-[14px]"
+                        class="w-full border-none outline-none px-3 text-[14px] bg-transparent placeholder:text-[#a9a9a9] placeholder:text-[14px]"
                         placeholder="Search Products, categories">
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center min-w-[16px] w-4 h-4">
                     <img src="@/assets/img/icon-search.svg" alt="search icon">
                 </div>
             </div>
