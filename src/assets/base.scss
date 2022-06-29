@@ -632,7 +632,7 @@ label {
 
 @media (max-width: 1024px) {
   .product-box {
-      margin: 0 20px !important;
+      margin: 0 5px !important;
   }
 }
 
@@ -684,12 +684,22 @@ label {
   }
 }
 
+body.active {
+  height: 100%;
+  overflow: hidden;
+}
+
 .filter-aside.active {
-  left: 0 !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  right: 0;
+  overflow-y: scroll;
   background: #f1f1f1;
   border-radius: 12px;
   padding: 20px;
-  width: 267px !important;
+  width: 100% !important;
+  height: 50% !important;
+  z-index: 999
 }
 
 .items-img .item-imgBox,
@@ -756,7 +766,7 @@ label {
 
 
   .aside-links {
-      @apply rounded-xl h-[282px]
+      @apply rounded-xl
   }
   .aside-links__title {
       @apply text-[18px] mb-4 font-semibold leading-[27px] font-['Poppins']

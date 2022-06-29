@@ -57,10 +57,11 @@
       </div>
       <div class="py-4 relative filters">
         <div class="w-full flex flex-wrap items-center gap-4 mb-4">
-          <a href="#filter-aside" @click="AsideMenu"
+          <div class="invisible-layer" v-show="is_modal_open" @click="is_modal_open = !is_modal_open"></div>
+          <div @click="AsideMenu"
             class="block lg:hidden p-2 bg-[#6A983C] rounded-xl cursor-pointer filter-btn">
             <img src="@/assets/img/filter.svg" alt="">
-          </a>
+          </div>
           <form class="gray-rounded">
             <Radio />
             <Radio />
@@ -88,59 +89,32 @@
     </div>
   </section>
 
-  <section class="home-container flex justify-between">
-    <div class="absolute -left-full lg:left-0 lg:relative ml-5 lg:max-w-[30%] duration-300 filter-aside"
+  <section class="home-container flex justify-between relative">
+    <div class="absolute -bottom-full lg:relative ml-5 lg:max-w-[30%] duration-300 filter-aside" v-if="is_modal_open"
       id="filter-aside">
       <div class="flex flex-col items-start">
         <AsideCategory />
         <AsideCheckbox />
         <AsideRating />
       </div>
-      <div slider id="slider-distance" class="mb-[23px]">
-        <div>
-          <div inverse-left style="width:70%;"></div>
-          <div inverse-right style="width:70%;"></div>
-          <div range style="left:30%;right:40%;"></div>
-          <span thumb style="left:30%;"></span>
-          <span thumb style="left:60%;"></span>
-          <div sign style="left:30%;">
-            <span id="value">30</span>
-          </div>
-          <div sign style="left:60%;">
-            <span id="value">60</span>
-          </div>
-        </div>
-        <input type="range" tabindex="0" value="30" max="100" min="0" step="1" oninput="
-            this.value=Math.min(this.value,this.parentNode.childNodes[5].value-1);
-            var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
-            var children = this.parentNode.childNodes[1].childNodes;
-            children[1].style.width=value+'%';
-            children[5].style.left=value+'%';
-            children[7].style.left=value+'%';children[11].style.left=value+'%';
-            children[11].childNodes[1].innerHTML=this.value;" />
-
-        <input type="range" tabindex="0" value="60" max="100" min="0" step="1" oninput="
-            this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
-            var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
-            var children = this.parentNode.childNodes[1].childNodes;
-            children[3].style.width=(100-value)+'%';
-            children[5].style.right=(100-value)+'%';
-            children[9].style.left=value+'%';children[13].style.left=value+'%';
-            children[13].childNodes[1].innerHTML=this.value;" />
+      <p class="text-[18px] mb-[23px] font-semibold leading-[27px] font-['Poppins']">Rating</p>
+      <div class="range-slider">
+        <input type="range" min="0" max="180" step="1" v-model="sliderMin">
+        <input type="range" min="0" max="180" step="1" v-model="sliderMax">
       </div>
       <div class="w-full flex items-center jsutify-between gap-[14px] mb-[31px]">
         <div>
           <p class="text-[12px] font-semibold leading-[18px] font-['Poppins']">Min</p>
           <input
             class="max-w-[109px] rounded-xl bg-[#f9f9f9] border border-solid py-3 px-4 font-normal font-[14px] text-[#a9a9a9]  border-[#d1d1d1]"
-            placeholder="0" type="number">
+            placeholder="0" type="number" v-model="sliderMin">
         </div>
         <p>-</p>
         <div>
           <p class="text-[12px] font-semibold leading-[18px] font-['Poppins']">Min</p>
           <input
             class="max-w-[109px] rounded-xl bg-[#f9f9f9] border border-solid py-3 px-4 font-normal font-[14px] text-[#a9a9a9]  border-[#d1d1d1]"
-            placeholder="000" type="number">
+            placeholder="000" type="number" v-model="sliderMax">
         </div>
       </div>
       <button class="btn-success btn-sm mr-[34px] apply-btn" @click="ApplyBtn">Apply</button>
@@ -149,7 +123,7 @@
     </div>
     <div class="w-full lg:w-[70%]">
       <transition name="fade" mode="out-in">
-        <div :key="listStyle" class="flex flex-row flex-wrap justify-evenly gap-8 prod-body active">
+        <div :key="listStyle" class="flex flex-row flex-wrap justify-evenly gap-y-[10px] prod-body active">
           <ProductCard v-if="listStyle === 'grid'" v-for="index in 10" :key="'A' + index" gridType="grid" />
           <ProductCard v-else v-for="index in 10" :key="'B' + index" gridType="list" />
         </div>
@@ -181,7 +155,10 @@ export default {
       listGray,
       gridGreen,
       gridGray,
-      listStyle: 'col'
+      listStyle: 'col',
+      minAngle: 10,
+      maxAngle: 30,
+      is_modal_open : false
     }
   },
   components: {
@@ -210,37 +187,81 @@ export default {
     },
     AsideMenu() {
       let aside = document.querySelector('.filter-aside')
+      let body = document.querySelector('body')
+      body.classList.toggle('active')
       aside.classList.toggle('active')
 
     },
     ApplyBtn() {
       let aside = document.querySelector('.filter-aside')
+      let body = document.querySelector('body')
       aside.classList.remove('active')
+      body.classList.remove('active')
+    }
+  },
+  computed: {
+    sliderMin: {
+      get: function() {
+        var val = parseInt(this.minAngle);
+        return val;
+      },
+      set: function(val) {
+        val = parseInt(val);
+        if (val > this.maxAngle) {
+          this.maxAngle = val;
+        }
+        this.minAngle = val;
+      }
+    },
+    sliderMax: {
+      get: function() {
+        var val = parseInt(this.maxAngle);
+        return val;
+      },
+      set: function(val) {
+        val = parseInt(val);
+        if (val < this.minAngle) {
+          this.minAngle = val;
+        }
+        this.maxAngle = val;
+      }
     }
   }
 }
 </script>
 
 <style lang="scss">
-
+.invisible-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 1000%;
+    z-index: 9998;
+}
 .grid-view-img,
 .list-view-img {
+
   .list-view-txt,
   .grid-view-txt {
     color: #a9a9a9 !important;
   }
+
   svg {
     path {
       stroke: #a9a9a9;
     }
   }
 }
+
 .grid-view-img.active,
 .list-view-img.active {
+
   .list-view-txt,
   .grid-view-txt {
     color: #6A983C !important;
   }
+
   svg {
     path {
       stroke: #6A983C;
@@ -248,179 +269,65 @@ export default {
   }
 }
 
-[slider] {
-  position: relative;
-  height: 6px;
-  border-radius: 10px;
-  text-align: left;
-  margin: 45px 0 10px 0;
-}
-
-[slider]>div {
-  position: absolute;
-  left: 13px;
-  right: 15px;
-  height: 6px;
-}
-
-[slider]>div>[inverse-left] {
-  position: absolute;
-  left: 0;
-  height: 6px;
-  border-radius: 10px;
-  background-color: #ebebeb;
-  margin: 0 7px;
-}
-
-[slider]>div>[inverse-right] {
-  position: absolute;
-  right: 0;
-  height: 6px;
-  border-radius: 10px;
-  background-color: #ebebeb;
-  margin: 0 7px;
-}
-
-[slider]>div>[range] {
-  position: absolute;
-  left: 0;
-  height: 6px;
-  border-radius: 14px;
-  background-color: #6A983C;
-}
-
-[slider]>div>[thumb] {
-  position: absolute;
-  top: -7px;
-  z-index: 2;
-  height: 20px;
-  width: 20px;
-  text-align: left;
-  margin-left: -11px;
-  cursor: pointer;
-  border: 1px solid #D1D1D1;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
-  border-radius: 50%;
-  outline: none;
-}
-
-[slider]>input[type="range"] {
-  position: absolute;
-  pointer-events: none;
-  -webkit-appearance: none;
-  z-index: 3;
-  height: 6px;
-  top: -2px;
+.range-slider {
   width: 100%;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  -moz-opacity: 0;
-  -khtml-opacity: 0;
-  opacity: 0;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  height: 1em;
+  margin-bottom: 23px;
 }
 
-div[slider]>input[type="range"]::-ms-track {
+.range-slider input[type=range] {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  background: transparent;
-  color: transparent;
+  margin: 0;
 }
 
-div[slider]>input[type="range"]::-moz-range-track {
-  -moz-appearance: none;
-  background: transparent;
-  color: transparent;
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
-div[slider]>input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: transparent;
-  border: transparent;
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
 }
 
-div[slider]>input[type="range"]:focus {
+input[type=range]:focus {
   outline: none;
 }
 
-div[slider]>input[type="range"]::-ms-thumb {
-  pointer-events: all;
-  width: 20px;
-  height: 20px;
-  border-radius: 0px;
-  border: 0 none;
-  background: red;
+
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #ebebeb;
+  border-radius: none;
+  box-shadow: none;
+  border: 0;
 }
 
-div[slider]>input[type="range"]::-moz-range-thumb {
-  pointer-events: all;
-  width: 20px;
+input[type=range]::-webkit-slider-thumb {
+  z-index: 2;
+  position: relative;
+  box-shadow: none;
+  border: none;
   height: 20px;
-  border-radius: 0px;
-  border: 0 none;
-  background: red;
-}
-
-div[slider]>input[type="range"]::-webkit-slider-thumb {
-  pointer-events: all;
   width: 20px;
-  height: 20px;
-  border-radius: 0px;
-  border: 0 none;
-  background: red;
+  border-radius: 50%;
+  border: 1px solid #d1d1d1;
+  background: #fff;
+  cursor: pointer;
+  margin-top: -7px;
   -webkit-appearance: none;
-}
-
-div[slider]>input[type="range"]::-ms-fill-lower {
-  background: transparent;
-  border: 0 none;
-}
-
-div[slider]>input[type="range"]::-ms-fill-upper {
-  background: transparent;
-  border: 0 none;
-}
-
-div[slider]>input[type="range"]::-ms-tooltip {
-  display: none;
-}
-
-[slider]>div>[sign] {
-  opacity: 0;
-  position: absolute;
-  margin-left: -11px;
-  top: -39px;
-  z-index: 3;
-  background-color: #6A983C;
-  color: #fff;
-  width: 28px;
-  height: 28px;
-  border-radius: 28px;
-  -webkit-border-radius: 28px;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  text-align: center;
-}
-
-[slider]>div>[sign]:after {
-  position: absolute;
-  content: "";
-  left: 0;
-  border-radius: 16px;
-  top: 19px;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-top-width: 16px;
-  border-top-style: solid;
-  border-top-color: #6A983C;
-}
-
-[slider]>div>[sign]>span {
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 28px;
-}
-
-[slider]:hover>div>[sign] {
-  opacity: 1;
 }
 </style>

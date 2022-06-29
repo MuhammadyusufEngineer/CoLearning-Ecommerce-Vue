@@ -23,8 +23,15 @@
         </div>
         <!-- Nav -->
         <div class="main-container hidden md:flex flex-row items-center py-4">
-            <div class="flex items-center gap-[33px]" v-for="item in anchors" :key="item.id">
-                <router-link :class="link.class" :to="link.href" v-for="link in item.items" :key="link.id"> {{ link.text }}</router-link>
+            <div class="flex items-center gap-[33px]">
+                <router-link to="/chat" class="text-green">Chat with us</router-link>
+                <a href="tel:998330072003">+998 33 007 2003</a>
+                <a href="mailto:mrimofficial7@gmail.com">mrimofficial7@gmail.com</a>
+            </div>
+            <div class="flex items-center gap-[33px]">
+                <router-link to="/blog" class="text-green">Blog</router-link>
+                <router-link to="/products" class="text-green">About us</router-link>
+                <router-link to="/careers" class="text-green">Careers</router-link>
             </div>
         </div>
         <!-- Divider -->
@@ -107,28 +114,6 @@
         </nav>
     </header>
 </template>
-<style scoped>
-img {
-    cursor: pointer;
-}
-a {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-}
-.swiper-slide {
-    background: none;
-}
-.mobile-burger {
-    background-image: url("./src/assets/img/burger.svg");
-}
-.mobile-burger.active {
-    background-image: url("./src/assets/img/close-burger.svg");
-}
-.mobile-menu.active {
-    left: 0 !important;
-}
-</style>
 <script>
 
 // Import Swiper Vue.js components
@@ -156,8 +141,6 @@ export default {
                 {
                     id: 1, items: [
                         { id: 1, router: true, href: '/chat', text: 'Chat with us', class: 'text-green' },
-                        { id: 2, router: true, href: '/page', text: '+998 33 007 20 03' },
-                        { id: 3, router: true, href: 'mailto:mrimofficial7@gmail.com', text: 'mrimofficial7@gmail.com' }
                         ]
                 },
                 {
@@ -172,8 +155,6 @@ export default {
                 { id: 2, href: '#', text: 'About us', class: 'text-green' },
                 { id: 3, href: '#', text: 'Careers', class: 'text-green' },
                 { id: 4, href: '#', text: 'Chat with us', class: 'text-green' },
-                { id: 5, href: 'tel:998330072003', text: '+998 33 007 20 03' },
-                { id: 6, href: 'mailto:mrimofficial7@gmail.com', text: 'mrimofficial7@gmail.com' },
             ],
             options: [
                 { id: 0, text: "All categories" },
@@ -220,3 +201,25 @@ export default {
 },
 }
 </script>
+<style scoped>
+img {
+    cursor: pointer;
+}
+a {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+.swiper-slide {
+    background: none;
+}
+.mobile-burger {
+    background-image: url("./src/assets/img/burger.svg");
+}
+.mobile-burger.active {
+    background-image: url("./src/assets/img/close-burger.svg");
+}
+.mobile-menu.active {
+    left: 0 !important;
+}
+</style>
